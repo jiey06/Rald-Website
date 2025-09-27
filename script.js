@@ -139,14 +139,7 @@ function animateSkillBars() {
 // Initialize EmailJS when page loads
 window.addEventListener('load', function() {
     if (typeof emailjs !== 'undefined') {
-        emailjs.init({
-            publicKey: 'Af_8uBYW9LTsuUVSE',
-            blockHeadless: true,
-            limitRate: {
-                id: 'app',
-                throttle: 10000,
-            },
-        });
+        emailjs.init('Af_8uBYW9LTsuUVSE');
         console.log('EmailJS initialized successfully');
     } else {
         console.error('EmailJS not loaded');
@@ -194,13 +187,12 @@ if (contactForm) {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitBtn.disabled = true;
         
-        // Prepare template parameters (using standard EmailJS variable names)
+        // Prepare template parameters
         const templateParams = {
-            from_name: name,
-            from_email: email,
-            subject: subject || 'New Contact Form Message',
-            message: message,
-            to_name: 'Gerald Ablanzar'
+            user_name: name,
+            user_email: email,
+            user_subject: subject || 'New Contact Form Message',
+            user_message: message
         };
         
         console.log('Sending email with params:', templateParams);
