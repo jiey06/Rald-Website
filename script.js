@@ -139,7 +139,14 @@ function animateSkillBars() {
 // Initialize EmailJS when page loads
 window.addEventListener('load', function() {
     if (typeof emailjs !== 'undefined') {
-        emailjs.init('Af_8uBYW9LTsuUVSE');
+        emailjs.init({
+            publicKey: 'Af_8uBYW9LTsuUVSE',
+            blockHeadless: true,
+            limitRate: {
+                id: 'app',
+                throttle: 10000,
+            },
+        });
         console.log('EmailJS initialized successfully');
     } else {
         console.error('EmailJS not loaded');
@@ -189,10 +196,11 @@ if (contactForm) {
         
         // Prepare template parameters (using standard EmailJS variable names)
         const templateParams = {
-            user_name: name,
-            user_email: email,
-            user_subject: subject || 'New Contact Form Message',
-            user_message: message
+            from_name: name,
+            from_email: email,
+            subject: subject || 'New Contact Form Message',
+            message: message,
+            to_name: 'Gerald Ablanzar'
         };
         
         console.log('Sending email with params:', templateParams);
@@ -206,8 +214,21 @@ if (contactForm) {
         })
         .catch(function(error) {
             console.error('FAILED...', error);
-            console.error('Error details:', error.status, error.text);
-            alert('Error: ' + (error.text || 'Unknown error occurred. Please try again or contact me directly at raldablanzar@email.com'));
+            console.error('Error details:', error);
+            
+            // More detailed error handling
+            let errorMessage = 'Failed to send message. ';
+            if (error.status === 422) {
+                errorMessage += 'Please check your EmailJS template variables.';
+            } else if (error.status === 400) {
+                errorMessage += 'Invalid request. Please try again.';
+            } else if (error.text) {
+                errorMessage += error.text;
+            } else {
+                errorMessage += 'Please contact me directly at raldablanzar@email.com';
+            }
+            
+            alert('Error: ' + errorMessage);
         })
         .finally(function() {
             submitBtn.innerHTML = originalText;
@@ -385,7 +406,7 @@ window.addEventListener('scroll', animateSkillBars);
 window.addEventListener('load', createParticles);
 
 // Initialize animations on page load
-document.addEventListener('DOMContentLoaded', function() {
+function initializeAnimations() {
     // Add animation classes to elements
     const elementsToAnimate = [
         { selector: '.about-text', class: 'fade-in' },
@@ -408,7 +429,16 @@ document.addEventListener('DOMContentLoaded', function() {
         revealOnScroll();
         animateSkillBars();
     }, 100);
-});
+}
+
+// Run animations when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeAnimations);
+// Fallback for when DOMContentLoaded already fired
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAnimations);
+} else {
+    initializeAnimations();
+}
 
 // Performance optimization: Throttle scroll events
 let scrollTimeout;
