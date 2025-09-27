@@ -1,23 +1,6 @@
-// Theme Toggle
-const themeToggle = document.getElementById('theme-toggle');
+// Set dark theme by default
 const body = document.body;
-
-themeToggle.addEventListener('click', () => {
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    
-    const icon = themeToggle.querySelector('i');
-    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-});
-
-// Load saved theme
-const savedTheme = localStorage.getItem('theme') || 'light';
-body.setAttribute('data-theme', savedTheme);
-const themeIcon = themeToggle.querySelector('i');
-themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+body.setAttribute('data-theme', 'dark');
 
 // Mobile Navigation
 const navToggle = document.getElementById('nav-toggle');
@@ -390,9 +373,9 @@ document.addEventListener('keydown', function(e) {
 window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
     if (window.scrollY > 50) {
-        navbar.style.background = savedTheme === 'dark' ? 'rgba(17, 24, 39, 0.98)' : 'rgba(255, 255, 255, 0.98)';
+        navbar.style.background = 'rgba(17, 24, 39, 0.98)';
     } else {
-        navbar.style.background = savedTheme === 'dark' ? 'rgba(17, 24, 39, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+        navbar.style.background = 'rgba(17, 24, 39, 0.95)';
     }
 });
 
