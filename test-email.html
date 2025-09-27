@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmailJS Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <h1>EmailJS Test Form</h1>
+    <form id="test-form">
+        <input type="text" id="test-name" placeholder="Your Name" required><br><br>
+        <input type="email" id="test-email" placeholder="Your Email" required><br><br>
+        <textarea id="test-message" placeholder="Your Message" required></textarea><br><br>
+        <button type="submit">Test Send</button>
+    </form>
+
+    <script>
+        // Initialize EmailJS
+        emailjs.init('Af_8uBYW9LTsuUVSE');
+
+        document.getElementById('test-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('test-name').value;
+            const email = document.getElementById('test-email').value;
+            const message = document.getElementById('test-message').value;
+            
+            console.log('Sending test email...');
+            
+            emailjs.send('service_oocprp5', 'template_3bt6ddi', {
+                from_name: name,
+                from_email: email,
+                subject: 'Test Email',
+                message: message,
+                to_email: 'raldablanzar@email.com'
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response);
+                alert('Test email sent successfully!');
+            })
+            .catch(function(error) {
+                console.error('FAILED...', error);
+                alert('Test failed: ' + JSON.stringify(error));
+            });
+        });
+    </script>
+</body>
+</html>
