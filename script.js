@@ -79,7 +79,7 @@ window.addEventListener('load', () => {
     const typewriterElement = document.querySelector('.typewriter');
     if (typewriterElement) {
         setTimeout(() => {
-            typeWriter(typewriterElement, 'Full Stack Developer', 150);
+            typeWriter(typewriterElement, 'Software Developer', 150);
         }, 1000);
     }
 });
@@ -346,15 +346,6 @@ function showProjectModal(project) {
                     <span class="tech-tag">${tech}</span>
                 `).join('')}
             </div>
-        </div>
-        
-        <div class="modal-actions" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="${project.github}" class="btn btn-secondary" target="_blank">
-                <i class="fab fa-github"></i> View Code
-            </a>
-            <a href="${project.demo}" class="btn btn-primary" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Live Demo
-            </a>
         </div>
     `;
     
